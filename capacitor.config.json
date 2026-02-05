@@ -1,0 +1,10 @@
+
+{
+  "appId": "com.spinit.decisionapp",
+  "appName": "Spin It!",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}

@@ -1,0 +1,8 @@
+
+{
+  "name": "Spin It! - Custom Roulette",
+  "description": "A high-performance, mobile-first wheel spinner app. Create custom wheels for decisions, games, or meals with smooth physics-based animations and persistent storage.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
