@@ -1,0 +1,33 @@
+
+{
+  "name": "Spin It! Decision Roulette",
+  "short_name": "Spin It!",
+  "description": "Make decisions fun with custom roulette wheels. Perfect for 'What to eat', 'Truth or Dare', and games.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#4f46e5",
+  "categories": ["utilities", "entertainment", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3655/3655571.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "label": "Custom decision wheels"
+    }
+  ],
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3655/3655571.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3655/3655571.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
