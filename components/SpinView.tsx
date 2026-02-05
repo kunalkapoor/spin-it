@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { WheelData, WheelOption, SpinDuration, FairnessMode } from '../types';
-import { PALETTES, DURATION_VALUES } from '../constants';
+import { WheelData, WheelOption, SpinDuration, FairnessMode } from '../types.ts';
+import { PALETTES, DURATION_VALUES } from '../constants.ts';
 import { ArrowLeft, RefreshCcw, Play, RotateCcw } from 'lucide-react';
 
 interface SpinViewProps {
@@ -53,7 +53,6 @@ const SpinView: React.FC<SpinViewProps> = ({ wheel, onBack }) => {
       ctx.lineTo(center, center);
       ctx.fill();
 
-      // Border for elimination
       if (isEliminated) {
         ctx.strokeStyle = '#e2e8f0';
         ctx.lineWidth = 1;
@@ -78,7 +77,6 @@ const SpinView: React.FC<SpinViewProps> = ({ wheel, onBack }) => {
       currentAngle += sliceAngle;
     });
 
-    // Center Hub
     ctx.beginPath();
     ctx.fillStyle = '#ffffff';
     ctx.arc(center, center, 40, 0, 2 * Math.PI);
@@ -86,7 +84,6 @@ const SpinView: React.FC<SpinViewProps> = ({ wheel, onBack }) => {
     ctx.strokeStyle = '#f8fafc';
     ctx.lineWidth = 6;
     ctx.stroke();
-    ctx.shadowBlur = 0;
   }, [wheel, totalWeight, eliminatedIds]);
 
   useEffect(() => {
@@ -122,7 +119,6 @@ const SpinView: React.FC<SpinViewProps> = ({ wheel, onBack }) => {
       rotationRef.current += velocityRef.current;
       velocityRef.current *= friction;
       
-      // Haptic tick logic
       const currentRes = calculateResultFromRotation(rotationRef.current);
       const segmentIdx = wheel.options.findIndex(o => o.id === currentRes.id);
       if (segmentIdx !== lastSegmentRef.current) {
@@ -135,7 +131,7 @@ const SpinView: React.FC<SpinViewProps> = ({ wheel, onBack }) => {
     } else {
       setIsSpinning(false);
       velocityRef.current = 0;
-      rotationRef.current = targetRotationRef.current; // SNAPPING
+      rotationRef.current = targetRotationRef.current;
       drawWheel(rotationRef.current);
       
       const winner = calculateResultFromRotation(rotationRef.current);
@@ -160,7 +156,6 @@ const SpinView: React.FC<SpinViewProps> = ({ wheel, onBack }) => {
 
     setResult(null);
 
-    // Filter available options for ELIMINATION
     const effectiveWeights = wheel.options.map(opt => {
       let w = mode === 'elimination' && eliminatedIds.has(opt.id) ? 0 : opt.weight;
       if (mode === 'balanced') w = opt.weight * Math.pow(0.35, pickCounts[opt.id] || 0);
@@ -186,7 +181,7 @@ const SpinView: React.FC<SpinViewProps> = ({ wheel, onBack }) => {
     }
     if (!winningOption) winningOption = wheel.options[0];
 
-    const targetInternal = winStart + (winEnd - winStart) * 0.5; // Target perfect center
+    const targetInternal = winStart + (winEnd - winStart) * 0.5;
     const pointerAngle = (3 * Math.PI) / 2;
     let currentRot = rotationRef.current % (2 * Math.PI);
     if (currentRot < 0) currentRot += 2 * Math.PI;
@@ -195,8 +190,8 @@ const SpinView: React.FC<SpinViewProps> = ({ wheel, onBack }) => {
     if (distToTarget < 0) distToTarget += 2 * Math.PI;
     
     const durationMode = wheel.config?.duration || 'medium';
-    // Increased fast mode to 12 rotations for much higher top speed
-    let extraSpins = Math.PI * 2 * (durationMode === 'instant' ? 1 : (durationMode === 'fast' ? 12 : 5));
+    // Even faster rotations for Fast mode: 25 full spins!
+    let extraSpins = Math.PI * 2 * (durationMode === 'instant' ? 1 : (durationMode === 'fast' ? 25 : 5));
     
     const totalDist = distToTarget + extraSpins;
     targetRotationRef.current = rotationRef.current + totalDist;
